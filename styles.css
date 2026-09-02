@@ -274,7 +274,7 @@ body {
 
 .add-row {
   display: block;
-  margin: 0.2mm 0 0;
+  margin: 0;
   border: 0;
   background: transparent;
   color: #9a9a9a;
@@ -282,7 +282,16 @@ body {
   cursor: pointer;
   padding: 0;
   line-height: 1.2;
+  height: 0;
+  overflow: hidden;
+  opacity: 0;
+}
+
+.day:hover .add-row,
+.add-row:focus {
+  margin: 0.2mm 0 0;
   height: auto;
+  overflow: visible;
   opacity: 0.7;
 }
 
