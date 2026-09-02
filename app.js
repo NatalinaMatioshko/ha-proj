@@ -9,18 +9,14 @@ const DAYS = [
 const MORNING_HINTS = [
   ["9.15", "10.00"],
   ["10.00", "10.45"],
-  ["10.45", "11.30"],
-  ["11.30", "12.15"],
-  ["12.15", "13.00"],
 ];
 
 const AFTERNOON_HINTS = [
   ["15.00", "15.45"],
   ["15.45", "16.30"],
-  ["16.30", "17.15"],
 ];
 
-const STORAGE_KEY = "umka-schedule-template-v1";
+const STORAGE_KEY = "umka-schedule-template-v2";
 
 const emptySlot = () => ({ from: "", to: "", lesson: "" });
 
@@ -35,16 +31,40 @@ function defaultState() {
   return { group: "", days };
 }
 
+function mergeState(parsed) {
+  const base = defaultState();
+  if (!parsed || typeof parsed !== "object") return base;
+  return {
+    group: parsed.group ?? "",
+    days: { ...base.days, ...(parsed.days || {}) },
+  };
+}
+
+function encodeShare(data) {
+  return encodeURIComponent(JSON.stringify(data));
+}
+
+function decodeShare(raw) {
+  return JSON.parse(decodeURIComponent(raw));
+}
+
+function stateFromHash() {
+  const hash = location.hash.startsWith("#s=") ? location.hash.slice(3) : "";
+  if (!hash) return null;
+  try {
+    return mergeState(decodeShare(hash));
+  } catch {
+    return null;
+  }
+}
+
 function loadState() {
+  const fromLink = stateFromHash();
+  if (fromLink) return fromLink;
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return defaultState();
-    const parsed = JSON.parse(raw);
-    const base = defaultState();
-    return {
-      group: parsed.group ?? "",
-      days: { ...base.days, ...(parsed.days || {}) },
-    };
+    return mergeState(JSON.parse(raw));
   } catch {
     return defaultState();
   }
@@ -54,6 +74,8 @@ let state = loadState();
 
 function saveState() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  const next = `${location.pathname}${location.search}#s=${encodeShare(state)}`;
+  history.replaceState(null, "", next);
 }
 
 function formatTime(value) {
@@ -164,10 +186,30 @@ function bind() {
   });
 
   document.getElementById("printBtn").addEventListener("click", () => window.print());
+  document.getElementById("shareBtn").addEventListener("click", async () => {
+    saveState();
+    const hint = document.getElementById("shareHint");
+    try {
+      await navigator.clipboard.writeText(location.href);
+      hint.hidden = false;
+      hint.textContent = "Посилання скопійовано. Відкрий його на іншому комп’ютері — розклад буде той самий.";
+    } catch {
+      hint.hidden = false;
+      hint.textContent = "Скопіюй адресу з рядка браузера і відкрий її на іншому комп’ютері.";
+    }
+  });
   document.getElementById("resetBtn").addEventListener("click", () => {
     if (!confirm("Очистити весь розклад?")) return;
     state = defaultState();
     saveState();
+    render();
+  });
+
+  window.addEventListener("hashchange", () => {
+    const fromLink = stateFromHash();
+    if (!fromLink) return;
+    state = fromLink;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
     render();
   });
 }
@@ -175,4 +217,5 @@ function bind() {
 document.addEventListener("DOMContentLoaded", () => {
   render();
   bind();
+  saveState();
 });

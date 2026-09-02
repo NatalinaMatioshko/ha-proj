@@ -1,0 +1,10 @@
+{
+  "name": "ha-proj",
+  "private": true,
+  "scripts": {
+    "dev": "serve -l 4173 ."
+  },
+  "devDependencies": {
+    "serve": "^14.2.4"
+  }
+}

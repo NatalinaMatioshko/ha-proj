@@ -31,12 +31,21 @@ body {
   top: 0;
   z-index: 20;
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   justify-content: center;
+  align-items: center;
   padding: 12px 16px;
   background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid #e6e6e6;
+}
+
+.toolbar-hint {
+  width: 100%;
+  text-align: center;
+  font-size: 13px;
+  color: #4a4a4a;
 }
 
 .toolbar button {
@@ -66,10 +75,11 @@ body {
 .sheet {
   position: relative;
   width: 210mm;
-  height: 297mm;
+  min-height: 297mm;
+  height: auto;
   background: var(--page);
-  overflow: hidden;
-  padding: 10mm 12mm 8mm 14mm;
+  overflow: visible;
+  padding: 7mm 11mm 8mm 12mm;
   box-shadow: 0 18px 50px rgba(0, 0, 0, 0.08);
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
@@ -82,18 +92,22 @@ body {
 }
 
 .decor-png {
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  top: auto;
+  right: 0;
+  bottom: 0;
+  width: 210mm;
+  height: 297mm;
   object-fit: cover;
-  object-position: right center;
+  object-position: right bottom;
   mix-blend-mode: multiply;
+  transform: scale(0.72);
+  transform-origin: right bottom;
 }
 
 .sheet-content {
   position: relative;
   z-index: 1;
-  height: 100%;
+  min-height: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -101,26 +115,28 @@ body {
 .header {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
-  align-items: start;
+  align-items: center;
   gap: 8px;
-  margin-bottom: 5mm;
+  margin-bottom: 3mm;
   flex: 0 0 auto;
 }
 
 .logo-umka {
-  height: 16mm;
+  height: 14mm;
   width: auto;
   justify-self: start;
 }
 
 .logo-cambridge {
-  height: 17mm;
+  height: 26mm;
   width: auto;
-  max-width: 62mm;
+  max-width: 78mm;
   object-fit: contain;
   object-position: right center;
   justify-self: end;
   mix-blend-mode: multiply;
+  transform: scale(1.12);
+  transform-origin: right center;
 }
 
 .title-block {
@@ -131,15 +147,15 @@ body {
 .title-block h1 {
   margin: 0;
   font-weight: 400;
-  font-size: 22pt;
+  font-size: 16pt;
   letter-spacing: 0.4px;
   color: var(--title);
   line-height: 1.05;
 }
 
 .group-line {
-  margin-top: 1.5mm;
-  font-size: 12pt;
+  margin-top: 0.8mm;
+  font-size: 10pt;
   font-weight: 400;
   color: #a3a3a3;
   display: flex;
@@ -170,7 +186,8 @@ body {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 1.4mm;
 }
 
 .day {
@@ -179,24 +196,25 @@ body {
 
 .day-name {
   margin: 0;
-  font-size: 12pt;
+  font-size: 8.5pt;
   font-weight: 700;
-  padding-bottom: 1mm;
+  padding-bottom: 0.3mm;
   border-bottom: 1px solid var(--line);
   width: 100%;
 }
 
 .slots {
-  margin-top: 1.2mm;
+  position: relative;
+  margin-top: 0.3mm;
   max-width: 118mm;
 }
 
 .row {
   display: grid;
-  grid-template-columns: 32mm 4mm 1fr;
+  grid-template-columns: 26mm 3mm 1fr;
   align-items: center;
-  gap: 1.5mm;
-  min-height: 5.3mm;
+  gap: 2.4mm;
+  min-height: 3.7mm;
 }
 
 .time {
@@ -206,14 +224,14 @@ body {
 }
 
 .time input {
-  width: 14mm;
+  width: 12mm;
   border: 0;
   border-bottom: 1px dotted #cfcfcf;
   background: transparent;
-  font: 400 10pt/1.2 var(--font);
+  font: 400 7.5pt/1.1 var(--font);
   color: var(--ink);
   text-align: center;
-  padding: 0.4mm 0;
+  padding: 0.1mm 0;
   outline: none;
 }
 
@@ -228,7 +246,7 @@ body {
 
 .bullet {
   color: var(--ink);
-  font-size: 11pt;
+  font-size: 8pt;
   line-height: 1;
   text-align: center;
 }
@@ -238,47 +256,36 @@ body {
   border: 0;
   border-bottom: 1px dotted #cfcfcf;
   background: transparent;
-  font: 400 10pt/1.2 var(--font);
+  font: 400 7.5pt/1.1 var(--font);
   color: var(--ink);
-  padding: 0.4mm 1px;
+  padding: 0.1mm 1px;
   outline: none;
 }
 
 .half-title {
-  margin: 1.6mm 0 0.8mm;
-  font-size: 10.5pt;
+  margin: 0.6mm 0 0.2mm;
+  font-size: 8pt;
   font-weight: 700;
 }
 
 .add-row {
-  margin: 0;
+  display: block;
+  margin: 0.2mm 0 0;
   border: 0;
   background: transparent;
-  color: #b0b0b0;
-  font: 600 7.5pt var(--font);
+  color: #9a9a9a;
+  font: 600 6.5pt var(--font);
   cursor: pointer;
   padding: 0;
-  height: 0;
-  overflow: hidden;
-  opacity: 0;
-}
-
-.day:hover .add-row,
-.add-row:focus {
-  height: 3.2mm;
-  opacity: 1;
+  line-height: 1.2;
+  height: auto;
+  opacity: 0.7;
 }
 
 @media screen and (max-width: 860px) {
   .stage {
     padding: 12px 0 32px;
     overflow-x: auto;
-  }
-
-  .sheet {
-    transform-origin: top center;
-    transform: scale(0.48);
-    margin-bottom: calc(297mm * -0.52);
   }
 }
 
@@ -298,7 +305,9 @@ body {
 
   .sheet {
     width: 210mm;
-    height: 297mm;
+    height: auto;
+    min-height: 297mm;
+    overflow: visible;
     margin: 0;
     box-shadow: none;
     transform: none;
