@@ -214,12 +214,12 @@ body {
 .slots {
   position: relative;
   margin-top: 0.3mm;
-  max-width: 118mm;
+  max-width: 128mm;
 }
 
 .row {
   display: grid;
-  grid-template-columns: max-content 5mm 1fr;
+  grid-template-columns: max-content 5mm 1fr 4.5mm;
   align-items: center;
   column-gap: 4mm;
   min-height: 5.2mm;
@@ -297,6 +297,23 @@ body {
   opacity: 0.7;
 }
 
+.remove-row {
+  border: 0;
+  background: transparent;
+  color: #b0b0b0;
+  font: 600 9pt/1 var(--font);
+  cursor: pointer;
+  padding: 0;
+  width: 4.5mm;
+  text-align: center;
+  opacity: 0;
+}
+
+.day:hover .remove-row,
+.remove-row:focus {
+  opacity: 0.75;
+}
+
 @media screen and (max-width: 860px) {
   .stage {
     padding: 12px 0 32px;
@@ -310,7 +327,8 @@ body {
   }
 
   .toolbar,
-  .add-row {
+  .add-row,
+  .remove-row {
     display: none !important;
   }
 

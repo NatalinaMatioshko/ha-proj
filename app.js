@@ -125,6 +125,7 @@ function slotRow(dayId, section, index, slot, hints) {
         value="${slot.lesson.replace(/"/g, "&quot;")}"
         aria-label="Назва уроку"
       >
+      <button class="remove-row" type="button" data-remove aria-label="Видалити урок">×</button>
     </div>
   `;
 }
@@ -177,6 +178,17 @@ function bind() {
   });
 
   root.addEventListener("click", (e) => {
+    const remove = e.target.closest("[data-remove]");
+    if (remove) {
+      const row = remove.closest(".row");
+      if (!row) return;
+      const { day, section, index } = row.dataset;
+      state.days[day][section].splice(Number(index), 1);
+      saveState();
+      render();
+      return;
+    }
+
     const add = e.target.closest("[data-add]");
     if (!add) return;
     const [dayId, section] = add.dataset.add.split(":");
