@@ -217,7 +217,8 @@ body {
   grid-template-columns: max-content 5mm 1fr;
   align-items: center;
   column-gap: 4mm;
-  min-height: 3.7mm;
+  min-height: 5.2mm;
+  padding: 0.5mm 0;
 }
 
 .time {
@@ -274,7 +275,7 @@ body {
 
 .add-row {
   display: block;
-  margin: 0;
+  margin: 0.2mm 0 0;
   border: 0;
   background: transparent;
   color: #9a9a9a;
@@ -282,16 +283,12 @@ body {
   cursor: pointer;
   padding: 0;
   line-height: 1.2;
-  height: 0;
-  overflow: hidden;
+  height: auto;
   opacity: 0;
 }
 
 .day:hover .add-row,
 .add-row:focus {
-  margin: 0.2mm 0 0;
-  height: auto;
-  overflow: visible;
   opacity: 0.7;
 }
 
