@@ -13,17 +13,21 @@
   box-sizing: border-box;
 }
 
-html,
-body {
+html {
   margin: 0;
   padding: 0;
+  overflow-x: auto;
+  overflow-y: scroll;
 }
 
 body {
+  margin: 0;
+  padding: 0;
   font-family: var(--font);
   color: var(--ink);
   background: var(--bg);
   min-height: 100vh;
+  overflow: visible;
 }
 
 .toolbar {
@@ -67,16 +71,18 @@ body {
 }
 
 .stage {
-  display: flex;
-  justify-content: center;
+  display: block;
+  width: 100%;
   padding: 24px 16px 48px;
+  overflow: visible;
 }
 
 .sheet {
   position: relative;
   width: 210mm;
   min-height: 297mm;
-  height: auto;
+  height: max-content;
+  margin: 0 auto;
   background: var(--page);
   overflow: visible;
   padding: 7mm 11mm 8mm 12mm;
@@ -107,9 +113,7 @@ body {
 .sheet-content {
   position: relative;
   z-index: 1;
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
+  height: max-content;
 }
 
 .header {
@@ -183,7 +187,6 @@ body {
 }
 
 #schedule {
-  flex: 1 1 auto;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -286,7 +289,7 @@ body {
 @media screen and (max-width: 860px) {
   .stage {
     padding: 12px 0 32px;
-    overflow-x: auto;
+    overflow: visible;
   }
 }
 
