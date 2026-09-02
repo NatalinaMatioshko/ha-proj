@@ -211,9 +211,9 @@ body {
 
 .row {
   display: grid;
-  grid-template-columns: 26mm 3mm 1fr;
+  grid-template-columns: max-content 5mm 1fr;
   align-items: center;
-  gap: 2.4mm;
+  column-gap: 4mm;
   min-height: 3.7mm;
 }
 
@@ -221,6 +221,7 @@ body {
   display: flex;
   align-items: center;
   gap: 1mm;
+  padding-right: 1mm;
 }
 
 .time input {
