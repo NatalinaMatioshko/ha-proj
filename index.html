@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Розклад | UMKA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="toolbar">
+    <button type="button" id="printBtn">Друк / PDF</button>
+    <button type="button" class="ghost" id="resetBtn">Очистити</button>
+  </div>
+
+  <div class="sheet">
+    <img class="decor decor-png" src="assets/schedule-decor.png" alt="">
+    <img class="decor decor-svg" src="assets/decor.svg" alt="">
+    <div class="sheet-content">
+      <header class="header">
+        <img class="logo-umka" src="assets/umka-logo.svg" alt="UMKA Ukrainian Master Kids Academy">
+        <div class="title-block">
+          <h1>Розклад</h1>
+          <div class="group-line">
+            <span>Групи «</span>
+            <input id="groupName" type="text" maxlength="40" placeholder="Винахідники" aria-label="Назва групи">
+            <span>»</span>
+          </div>
+        </div>
+        <img class="logo-cambridge" src="assets/cambridge-umka-logo.png" alt="Cambridge UMKA International School">
+      </header>
+
+      <main id="schedule"></main>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
